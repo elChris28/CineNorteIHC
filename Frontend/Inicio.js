@@ -1,18 +1,20 @@
 document.addEventListener("DOMContentLoaded", () => {
-  fetch("data/peliculas.json")
-    .then(res => res.json())
-    .then(data => {
-      const contenedor = document.querySelector(".peliculas");
-      contenedor.innerHTML = "";
+  const listaPeliculas = document.getElementById("listaPeliculas");
+  const peliculas = JSON.parse(localStorage.getItem("peliculas")) || [];
 
-      data.forEach(pelicula => {
-        contenedor.innerHTML += `
-          <div class="pelicula">
-            <img src="${pelicula.poster}" alt="${pelicula.titulo}" />
-            <h3>${pelicula.titulo}</h3>
-            <p>${pelicula.genero} | ${pelicula.duracion} | ${pelicula.clasificacion}</p>
-          </div>
-        `;
-      });
-    });
+  peliculas.forEach(pelicula => {
+    const peliculaDiv = document.createElement("div");
+    peliculaDiv.classList.add("pelicula");
+
+    peliculaDiv.innerHTML = `
+      <img src="${pelicula.poster}" alt="${pelicula.titulo}">
+      <div class="info">
+        <h3>${pelicula.titulo}</h3>
+        <p>${pelicula.genero} | ${pelicula.duracion}</p>
+        <p>Clasificación: ${pelicula.clasificacion}</p>
+      </div>
+    `;
+
+    listaPeliculas.appendChild(peliculaDiv);
+  });
 });

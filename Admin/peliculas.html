@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Panel Admin - Cine del Norte</title>
   <link rel="stylesheet" href="admin.css" />
+  <link rel="stylesheet" href="peliculas.css">
 </head>
 <body>
   <div class="admin-container">
@@ -21,10 +22,23 @@
     </aside>
 
     <main class="content">
-      <h1>Bienvenido al panel de administración</h1>
-      <p>Resumen general del sistema</p>
-      <!-- Aquí puedes poner tarjetas o métricas del sistema -->
+        <h1>Agregar nueva película</h1>
+        <form id="formPelicula">
+        <input type="text" id="titulo" placeholder="Título" required><br>
+        <input type="text" id="genero" placeholder="Género" required><br>
+        <input type="text" id="duracion" placeholder="Duración" required><br>
+        <input type="text" id="clasificacion" placeholder="Clasificación" required><br>
+        <input type="file" id="poster" accept="image/*" required><br>
+        <img id="previewPoster"  />
+        <button type="submit">Agregar</button>
+
+        <h2>Películas agregadas</h2>
+        <div id="listaPeliculas" class="peliculas-grid"></div>
+  </form>
+
+
     </main>
   </div>
 </body>
+<script src="scriptPeliculas.js"></script>
 </html>
