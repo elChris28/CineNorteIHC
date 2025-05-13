@@ -2,6 +2,9 @@ let editIndex = null;
 let imagenTemporal = null;
 
 
+// Mostrar películas al cargar
+document.addEventListener("DOMContentLoaded", renderPeliculas);
+
 function obtenerPeliculas() {
   return JSON.parse(localStorage.getItem("peliculas")) || [];
 }
@@ -98,5 +101,3 @@ document.getElementById("formPelicula").addEventListener("submit", e => {
   }
 });
 
-// Mostrar películas al cargar
-document.addEventListener("DOMContentLoaded", renderPeliculas);
