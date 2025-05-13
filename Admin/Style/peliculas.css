@@ -1,3 +1,15 @@
+/* Estilos generales del body para la página de salas */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f4f4f4;
+}
+
+.admin-container {
+  display: flex;
+  min-height: 100vh;
+}
+
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;

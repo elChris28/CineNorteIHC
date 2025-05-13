@@ -1,0 +1,130 @@
+/* Estilos generales del body para la página de salas */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f4f4;
+  }
+  
+  .admin-container {
+    display: flex;
+    min-height: 100vh;
+  }
+
+/* Sidebar lateral */
+.sidebar {
+    width: 220px;
+    background-color: #111;
+    color: #fff;
+    padding: 1em;
+  }
+  
+  .sidebar h2 {
+    font-size: 1.5em;
+    margin-bottom: 2em;
+    text-align: center;
+  }
+  
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sidebar ul li {
+    margin: 1em 0;
+  }
+  
+  .sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 0.5em;
+    transition: background 0.3s;
+  }
+  
+  .sidebar ul li a:hover,
+  .sidebar ul li a.active {
+    background-color: #ff4757;
+  }
+
+/* Contenido principal */
+.content {
+    flex: 1;
+    padding: 2em;
+  }
+  
+  #previewPoster {
+    max-width: 200px;
+    display: none;
+    margin-top: 10px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Estilos para resaltar el campo cuando se hace clic */
+  form#formSala input:focus,
+  form#formSala select:focus {
+    border: 2px solid black; /* Resaltar con borde negro */
+    outline: none; /* Eliminar el borde azul por defecto */
+  }
+  
+  /* Formulario para agregar nueva sala */
+  form#formSala input,
+  form#formSala select,
+  form#formSala button {
+    display: block;
+    width: 100%;
+    margin: 0.1em 0;
+    padding: 0.4em;
+    font-size: 0.9em;
+    border: 1px solid #424242;
+    border-radius: 6px;
+  }
+  
+  form#formSala button {
+    background-color: #b93d48;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  form#formSala button:hover {
+    background-color: #fc3200;
+  }
+  
+  /* Estilos para mostrar las salas agregadas */
+  .salas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5em;
+    margin-top: 2em;
+  }
+  
+  .sala {
+    background: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1em;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+  }
+  
+  .sala:hover {
+    transform: scale(1.03);
+  }
+  
+  .sala button {
+    margin: 0.5em 0.25em;
+    padding: 0.4em 1em;
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  
+  .sala button:hover {
+    background-color: #333;
+  }
