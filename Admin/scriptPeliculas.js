@@ -21,14 +21,23 @@ function renderPeliculas() {
 
   peliculas.forEach((pelicula, index) => {
     const card = document.createElement("div");
-    card.classList.add("pelicula");
+
+    // 🧩 Aquí va la línea que aplicará clases de Bootstrap a la tarjeta
+    card.classList.add("card", "p-3", "mb-4", "shadow-sm", "text-center");
 
     card.innerHTML = `
-      <img src="${pelicula.poster}" alt="${pelicula.titulo}" />
+      <img src="${pelicula.poster}" alt="${pelicula.titulo}" style="width: 100%; max-height: 250px; object-fit: cover;" />
       <h3>${pelicula.titulo}</h3>
-      <p>${pelicula.genero} | ${pelicula.duracion} | ${pelicula.clasificacion}</p>
-      <button onclick="editarPelicula(${index})">Editar</button>
-      <button onclick="eliminarPelicula(${index})">Eliminar</button>
+      <p><strong>Género:</strong> ${pelicula.genero}</p>
+      <p><strong>Duración:</strong> ${pelicula.duracion}</p>
+      <p><strong>Clasificación:</strong> ${pelicula.clasificacion}</p>
+      <p><strong>Idioma:</strong> ${pelicula.idioma || 'No definido'}</p>
+      <p><strong>Disponibilidad:</strong> ${(pelicula.disponibilidad || []).join(", ") || 'Sin especificar'}</p>
+      <p><strong>Sinopsis:</strong><br>${pelicula.sinopsis || 'Sin sinopsis'}</p>
+      <div class="mt-2">
+        <button class="btn btn-sm btn-primary me-2" onclick="editarPelicula(${index})">Editar</button>
+        <button class="btn btn-sm btn-danger" onclick="eliminarPelicula(${index})">Eliminar</button>
+      </div>
     `;
 
     contenedor.appendChild(card);
@@ -44,42 +53,55 @@ function eliminarPelicula(index) {
 
 function editarPelicula(index) {
   const peliculas = obtenerPeliculas();
-  const pelicula = peliculas[index];
+  const p = peliculas[index];
 
-  document.getElementById("titulo").value = pelicula.titulo;
-  document.getElementById("genero").value = pelicula.genero;
-  document.getElementById("duracion").value = pelicula.duracion;
-  document.getElementById("clasificacion").value = pelicula.clasificacion;
+  document.getElementById("titulo").value = p.titulo;
+  document.getElementById("genero").value = p.genero;
+  document.getElementById("duracion").value = p.duracion;
+  document.getElementById("clasificacion").value = p.clasificacion;
+  document.getElementById("idioma").value = p.idioma || "";
+  document.getElementById("sinopsis").value = p.sinopsis || "";
 
-  // Mostrar vista previa de la imagen actual
+  document.getElementById("2d").checked = p.disponibilidad?.includes("2D");
+  document.getElementById("3d").checked = p.disponibilidad?.includes("3D");
+  document.getElementById("vip").checked = p.disponibilidad?.includes("VIP");
+  document.getElementById("imax").checked = p.disponibilidad?.includes("IMAX");
+
   const preview = document.getElementById("previewPoster");
-  preview.src = pelicula.poster;
+  preview.src = p.poster;
   preview.style.display = "block";
 
-  imagenTemporal = pelicula.poster;
+  imagenTemporal = p.poster;
   editIndex = index;
 }
 
 document.getElementById("formPelicula").addEventListener("submit", e => {
   e.preventDefault();
 
-  const fileInput = document.getElementById("poster");
-  const file = fileInput.files[0];
+  const file = document.getElementById("poster").files[0];
   const reader = new FileReader();
 
   reader.onload = function () {
     const posterData = file ? reader.result : imagenTemporal;
+
+    const disponibilidad = [];
+    if (document.getElementById("2d").checked) disponibilidad.push("2D");
+    if (document.getElementById("3d").checked) disponibilidad.push("3D");
+    if (document.getElementById("vip").checked) disponibilidad.push("VIP");
+    if (document.getElementById("imax").checked) disponibilidad.push("IMAX");
 
     const nuevaPelicula = {
       titulo: document.getElementById("titulo").value,
       genero: document.getElementById("genero").value,
       duracion: document.getElementById("duracion").value,
       clasificacion: document.getElementById("clasificacion").value,
+      idioma: document.getElementById("idioma").value,
+      sinopsis: document.getElementById("sinopsis").value,
+      disponibilidad,
       poster: posterData
     };
 
     let peliculas = obtenerPeliculas();
-
     if (editIndex !== null) {
       peliculas[editIndex] = nuevaPelicula;
       editIndex = null;

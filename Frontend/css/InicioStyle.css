@@ -96,6 +96,11 @@ footer {
   transition: margin 0.3s ease;
 }
 
-
+.botones-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 12rem;
+  border-radius: 20px;
+  transition: opacity 0.3s ease;
+}
 
 

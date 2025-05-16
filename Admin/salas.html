@@ -26,40 +26,59 @@
       </ul>
     </aside>
        <!-- Contenido principal -->
-       <div class="flex-grow-1 p-4">
+      <main class="flex-grow-1 p-4">
         <h1 class="mb-4">Agregar nueva sala</h1>
-        <form id="formSala">
-            <input type="text" id="nombreSala" placeholder="Nombre de la sala" required>
-            <input type="number" id="capacidad" placeholder="Capacidad" required>
-            <select id="tipoSala" required>
+
+        <form id="formSala" class="row g-3">
+          <div class="col-md-6">
+            <input type="text" id="nombreSala" class="form-control" placeholder="Nombre de la sala" required>
+          </div>
+          <div class="col-md-6">
+            <input type="number" id="capacidad" class="form-control" placeholder="Capacidad" required>
+          </div>
+          <div class="col-md-6">
+            <select id="tipoSala" class="form-select" required>
               <option value="">Tipo de Sala</option>
               <option value="2D">2D</option>
               <option value="3D">3D</option>
               <option value="VIP">VIP</option>
               <option value="IMAX">IMAX</option>
             </select>
-            <input type="text" id="ubicacion" placeholder="Ubicación / Piso">
-            <select id="estado" required>
+          </div>
+          <div class="col-md-6">
+            <input type="text" id="ubicacion" class="form-control" placeholder="Ubicación / Piso">
+          </div>
+          <div class="col-md-6">
+            <select id="estado" class="form-select" required>
               <option value="">Estado</option>
               <option value="activa">Activa</option>
               <option value="inactiva">Inactiva</option>
             </select>
-            <select id="peliculaSala">
-                <option value="">-- Sin película asignada --</option>
-                <!-- Las demás opciones se llenarán dinámicamente -->
-              </select>
-            <button type="submit">Guardar Sala</button>
-          </form>
-  
-          <h2 class="mt-5">Salas agregadas</h2>
-          <div id="listaSalas" class="salas-grid">
-            <!-- Aquí se mostrarán las salas creadas dinámicamente -->
-        </div>
-          
-  </form>
+          </div>
+          <div class="col-md-6">
+            <select id="peliculaSala" class="form-select">
+              <option value="">-- Sin película asignada --</option>
+            </select>
+          </div>
 
+          <!-- Horarios -->
+          <div class="col-12">
+            <label class="form-label">Horarios disponibles</label>
+            <div class="input-group mb-2">
+              <input type="time" id="inputHorario" class="form-control">
+              <button type="button" class="btn btn-dark" onclick="agregarHorario()">Agregar Horario</button>
+            </div>
+            <div id="listaHorarios" class="d-flex flex-wrap gap-2"></div>
+          </div>
 
-    </main>
+          <div class="col-12">
+            <button type="submit" class="btn btn-danger">Guardar Sala</button>
+          </div>
+        </form>
+
+        <h2 class="mt-5">Salas agregadas</h2>
+        <div id="listaSalas" class="salas-grid"></div>
+      </main>
   </div>
 
   <!-- Bootstrap 5 JS -->

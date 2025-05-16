@@ -42,8 +42,31 @@
     <a href="#" class="btn btn-danger btn-lg">Ver Cartelera</a>
   </section>
 
-  <main >
+  <main class="container py-5" style="margin-top: 80px;">
+    <h2 class="mb-4 text-white">Cartelera y Horarios</h2>
+    <div id="contenedorHorarios" class="d-flex flex-column gap-4"></div>
 
+    <template id="templatePelicula">
+      <div class="card mb-4 shadow-sm tarjeta-pelicula">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img class="img-fluid rounded-start poster" style="height: 100%; object-fit: cover;">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h4 class="card-title titulo"></h4>
+              <p class="card-text sinopsis"></p>
+              <p><strong>Idioma:</strong> <span class="idioma"></span></p>
+              <p><strong>Disponibilidad:</strong> <span class="disponibilidad"></span></p>
+              <div class="horarios-container">
+                <h6 class="mb-2">Horarios:</h6>
+                <!-- Horarios por sala se inyectarán aquí -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
   </main>
 
   <!-- Footer -->

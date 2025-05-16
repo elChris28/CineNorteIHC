@@ -28,18 +28,59 @@
 
     <main class="content">
         <h1>Agregar nueva película</h1>
-        <form id="formPelicula">
-        <input type="text" id="titulo" placeholder="Título" required><br>
-        <input type="text" id="genero" placeholder="Género" required><br>
-        <input type="text" id="duracion" placeholder="Duración" required><br>
-        <input type="text" id="clasificacion" placeholder="Clasificación" required><br>
-        <input type="file" id="poster" accept="image/*" required><br>
-        <img id="previewPoster"  />
-        <button type="submit">Agregar</button>
+          <form id="formPelicula" class="row g-3">
+            <div class="col-md-6">
+              <input type="text" id="titulo" class="form-control" placeholder="Título" required>
+            </div>
+            <div class="col-md-6">
+              <input type="text" id="genero" class="form-control" placeholder="Género" required>
+            </div>
+            <div class="col-md-4">
+              <input type="text" id="duracion" class="form-control" placeholder="Duración" required>
+            </div>
+            <div class="col-md-4">
+              <input type="text" id="clasificacion" class="form-control" placeholder="Clasificación" required>
+            </div>
+            <div class="col-md-4">
+              <select id="idioma" class="form-select" required>
+                <option value="">Selecciona idioma</option>
+                <option value="Doblada">Doblada</option>
+                <option value="Subtitulada">Subtitulada</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <textarea id="sinopsis" class="form-control" placeholder="Sinopsis" rows="3" required></textarea>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Disponibilidad</label><br>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="2d" value="2D">
+                <label class="form-check-label" for="2d">2D</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="3d" value="3D">
+                <label class="form-check-label" for="3d">3D</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="vip" value="VIP">
+                <label class="form-check-label" for="vip">VIP</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="imax" value="IMAX">
+                <label class="form-check-label" for="imax">IMAX</label>
+              </div>
+            </div>
+            <div class="col-12">
+              <input type="file" id="poster" class="form-control" accept="image/*" required>
+              <img id="previewPoster" class="mt-2" style="max-width: 200px; display: none;" />
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn btn-danger">Agregar</button>
+            </div>
+          </form>
 
-        <h2>Películas agregadas</h2>
-        <div id="listaPeliculas" class="peliculas-grid"></div>
-  </form>
+          <h2 class="mt-5">Películas agregadas</h2>
+          <div id="listaPeliculas" class="peliculas-grid"></div>
 
 
     </main>

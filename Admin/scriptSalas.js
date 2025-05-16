@@ -1,4 +1,5 @@
 let editIndex = null;
+let horariosTemp = [];
 
 // Mostrar salas al cargar
 document.addEventListener("DOMContentLoaded", () => {
@@ -40,21 +41,25 @@ function renderSalas() {
 
   salas.forEach((sala, index) => {
     const card = document.createElement("div");
-    card.classList.add("sala");
+    // 🧩 Aquí va la línea que aplicará clases de Bootstrap a la tarjeta
+    card.classList.add("card", "p-3", "mb-4", "shadow-sm", "text-center");
 
     const peliculaNombre = sala.peliculaId !== null && peliculas[sala.peliculaId]
       ? peliculas[sala.peliculaId].titulo
       : "Ninguna";
 
     card.innerHTML = `
-      <h3>${sala.nombre}</h3>
+      <h4 class="mb-2">${sala.nombre}</h4>
       <p><strong>Capacidad:</strong> ${sala.capacidad}</p>
       <p><strong>Tipo:</strong> ${sala.tipo}</p>
       <p><strong>Ubicación:</strong> ${sala.ubicacion}</p>
       <p><strong>Estado:</strong> ${sala.estado}</p>
       <p><strong>Película:</strong> ${peliculaNombre}</p>
-      <button onclick="editarSala(${index})">Editar</button>
-      <button onclick="eliminarSala(${index})">Eliminar</button>
+      <p><strong>Horarios:</strong> ${sala.horarios?.join(", ") || "Sin horarios"}</p>
+      <div class="mt-2">
+        <button class="btn btn-sm btn-primary me-2" onclick="editarSala(${index})">Editar</button>
+        <button class="btn btn-sm btn-danger" onclick="eliminarSala(${index})">Eliminar</button>
+      </div>
     `;
 
     contenedor.appendChild(card);
@@ -71,6 +76,8 @@ function eliminarSala(index) {
 function editarSala(index) {
   const salas = obtenerSalas();
   const sala = salas[index];
+  horariosTemp = sala.horarios || [];
+  renderHorariosTemp();
 
   document.getElementById("nombreSala").value = sala.nombre;
   document.getElementById("capacidad").value = sala.capacidad;
@@ -81,6 +88,38 @@ function editarSala(index) {
 
   editIndex = index;
 }
+
+function agregarHorario() {
+  const input = document.getElementById("inputHorario");
+  const valor = input.value;
+
+  if (valor && !horariosTemp.includes(valor)) {
+    horariosTemp.push(valor);
+    renderHorariosTemp();
+    input.value = "";
+  }
+}
+
+function renderHorariosTemp() {
+  const contenedor = document.getElementById("listaHorarios");
+  contenedor.innerHTML = "";
+
+  horariosTemp.forEach((hora, index) => {
+    const span = document.createElement("span");
+    span.className = "badge bg-dark d-flex align-items-center";
+    span.style.padding = "0.5rem 0.75rem";
+    span.style.marginRight = "0.5rem";
+    span.innerHTML = `${hora} <button class="btn-close btn-close-white ms-2" onclick="eliminarHorario(${index})"></button>`;
+    contenedor.appendChild(span);
+  });
+}
+
+function eliminarHorario(index) {
+  horariosTemp.splice(index, 1);
+  renderHorariosTemp();
+}
+
+
 
 // Al cambiar el estado, si es inactiva, limpiamos el select de película
 document.getElementById("estado").addEventListener("change", function () {
@@ -102,7 +141,8 @@ document.getElementById("formSala").addEventListener("submit", e => {
     tipo: document.getElementById("tipoSala").value,
     ubicacion: document.getElementById("ubicacion").value,
     estado: estadoSala,
-    peliculaId: estadoSala === "activa" && peliculaSeleccionada !== "" ? parseInt(peliculaSeleccionada) : null
+    peliculaId: estadoSala === "activa" && peliculaSeleccionada !== "" ? parseInt(peliculaSeleccionada) : null,
+    horarios: horariosTemp // <- ESTA es la válida
   };
 
   let salas = obtenerSalas();
@@ -116,5 +156,7 @@ document.getElementById("formSala").addEventListener("submit", e => {
 
   guardarSalas(salas);
   e.target.reset();
+  horariosTemp = [];
+  renderHorariosTemp();
   renderSalas();
 });
