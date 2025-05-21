@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cine del Norte</title>
-  <link rel="stylesheet" href="/Frontend/css/cartelera.css" />
+  <link rel="stylesheet" href="/Frontend/css/ReservarAsiento.css" />
   <!-- Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -37,17 +37,44 @@
 
   <!-- Hero -->
   <section class="hero">
-    <h1 class="fw-bold">La emoción del cine en tu ciudad</h1>
-    <p>Consulta funciones, estrenos y reserva tu entrada.</p>
-    <a href="#" class="btn btn-danger btn-lg">Ver Cartelera</a>
+
   </section>
 
-  <!-- Cartelera -->
-  <main class="bg-dark text-white py-5 cartelera">
-    <div class="container">
-      <h2>Cartelera</h2>
-      <div class="row" id="listaPeliculas">
-        <!-- Películas dinámicas aquí -->
+  <main class="container py-5">
+    <div class="row g-4">
+      <!-- Panel Izquierdo -->
+      <div class="col-md-4 bg-light rounded p-4 text-dark shadow-sm">
+        <div class="text-center mb-4">
+          <img id="poster" src="" alt="Poster" class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
+        </div>
+        <h4 id="titulo" class="fw-bold"></h4>
+        <p id="idioma"></p>
+        <p class="fw-bold">CP Canto Grande</p>
+        <p><i class="bi bi-calendar-event"></i> <span id="fecha"></span></p>
+        <p><i class="bi bi-clock"></i> <span id="hora"></span></p>
+        <p><i class="bi bi-camera-reels"></i> <span id="sala"></span></p>
+        <hr>
+      </div>
+
+      <!-- Panel Derecho -->
+      <div class="col-md-8 bg-white rounded p-4 shadow-sm">
+        <h5 class="text-center fw-bold mb-4 text-muted">Pantalla</h5>
+        <div id="interfazAsientos" class="d-flex justify-content-center mb-4"></div>
+
+        <div class="d-flex justify-content-around text-center mb-3 small">
+          <div><span class="asiento disponible me-1"></span> Disponible</div>
+          <div><span class="asiento ocupada me-1"></span> Ocupada</div>
+          <div><span class="asiento seleccionada me-1"></span> Seleccionada</div>
+          <div><span class="asiento silla me-1"></span> Silla de ruedas</div>
+        </div>
+
+        <p class="text-muted text-center small">
+          Todas nuestras salas cuentan con espacios señalizados para sillas de ruedas.
+        </p>
+
+        <div class="text-center mt-4">
+          <button class="btn btn-primary btn-lg px-5" id="confirmarReserva" disabled>Continuar</button>
+        </div>
       </div>
     </div>
   </main>
@@ -59,6 +86,6 @@
 
   <!-- Bootstrap 5 JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="scriptCartelera.js"></script>
+  <script src="scriptReservar.js"></script>
 </body>
 </html>

@@ -40,6 +40,17 @@ document.addEventListener("DOMContentLoaded", () => {
         const btn = document.createElement("button");
         btn.className = "btn btn-sm btn-outline-primary me-2 mb-2";
         btn.textContent = h;
+
+btn.addEventListener("click", () => {
+  const reserva = {
+    sala: { nombre: sala.nombre },
+    peliculaId: sala.peliculaId,
+    horario: h
+  };
+  localStorage.setItem("reservaSeleccionada", JSON.stringify(reserva));
+  window.location.href = "ReservarAsiento.html";
+});
+
         bloqueSala.appendChild(btn);
       });
 

@@ -1,5 +1,6 @@
 let editIndex = null;
 let horariosTemp = [];
+let salaSeleccionadaIndex = null;
 
 // Mostrar salas al cargar
 document.addEventListener("DOMContentLoaded", () => {
@@ -57,6 +58,7 @@ function renderSalas() {
       <p><strong>Película:</strong> ${peliculaNombre}</p>
       <p><strong>Horarios:</strong> ${sala.horarios?.join(", ") || "Sin horarios"}</p>
       <div class="mt-2">
+          <button class="btn btn-sm btn-secondary me-2"onclick="abrirModalInterfaz(${index})"> Interfaz</button>
         <button class="btn btn-sm btn-primary me-2" onclick="editarSala(${index})">Editar</button>
         <button class="btn btn-sm btn-danger" onclick="eliminarSala(${index})">Eliminar</button>
       </div>
@@ -119,6 +121,86 @@ function eliminarHorario(index) {
   renderHorariosTemp();
 }
 
+function generarHTMLInterfaz(asientos, columnas) {
+  let html = `<div class="grid" style="display: grid; grid-template-columns: repeat(${columnas}, 26px); gap: 4px;">`;
+
+  asientos.forEach(a => {
+    html += `<div class="asiento ${a.tipo}" title="Asiento ${a.id + 1}"></div>`;
+  });
+
+  html += `</div>`;
+  return html;
+}
+
+
+function abrirModalInterfaz(index) {
+  const salas = obtenerSalas();
+  const sala = salas[index];
+  salaSeleccionadaIndex = index;
+
+  const info = document.getElementById("infoSala");
+  info.textContent = `${sala.nombre} - Capacidad: ${sala.capacidad}`;
+
+  const filas = 10;
+  const columnas = Math.ceil(sala.capacidad / filas);
+  const total = filas * columnas;
+
+  const asientos = sala.asientos || Array.from({ length: total }, (_, i) => ({
+    id: i,
+    tipo: "disponible"
+  }));
+
+  const grid = document.getElementById("asientos");
+  grid.innerHTML = "";
+  grid.style.gridTemplateColumns = `repeat(${columnas}, 26px)`;
+
+  asientos.forEach((a, i) => {
+    const div = document.createElement("div");
+    div.className = `asiento ${a.tipo}`;
+    div.title = `Asiento ${a.id + 1}`;
+
+    if (a.tipo !== "ocupado") {
+      div.addEventListener("click", () => {
+        a.tipo = a.tipo === "discapacitado" ? "disponible" : "discapacitado";
+        render();
+      });
+    }
+
+    grid.appendChild(div);
+  });
+
+  function render() {
+    grid.innerHTML = "";
+    asientos.forEach((a, i) => {
+      const div = document.createElement("div");
+      div.className = `asiento ${a.tipo}`;
+      div.title = `Asiento ${a.id + 1}`;
+      if (a.tipo !== "ocupado") {
+        div.addEventListener("click", () => {
+          a.tipo = a.tipo === "discapacitado" ? "disponible" : "discapacitado";
+          render();
+        });
+      }
+      grid.appendChild(div);
+    });
+  }
+
+  render();
+
+  document.getElementById("guardarAsientos").onclick = () => {
+    sala.asientos = asientos;
+    sala.interfaz = generarHTMLInterfaz(asientos, columnas); // 👈 NUEVA LÍNEA
+
+    salas[salaSeleccionadaIndex] = sala;
+    guardarSalas(salas);
+    alert("Asientos guardados correctamente.");
+  };
+
+  // Mostrar el modal usando Bootstrap
+  const modal = new bootstrap.Modal(document.getElementById("modalInterfaz"));
+  modal.show();
+}
+
 
 
 // Al cambiar el estado, si es inactiva, limpiamos el select de película
@@ -142,12 +224,18 @@ document.getElementById("formSala").addEventListener("submit", e => {
     ubicacion: document.getElementById("ubicacion").value,
     estado: estadoSala,
     peliculaId: estadoSala === "activa" && peliculaSeleccionada !== "" ? parseInt(peliculaSeleccionada) : null,
-    horarios: horariosTemp // <- ESTA es la válida
+    horarios: horariosTemp
   };
 
   let salas = obtenerSalas();
 
   if (editIndex !== null) {
+    const salaAnterior = salas[editIndex];
+    
+    // ✅ CONSERVAR asientos e interfaz ya guardados
+    nuevaSala.asientos = salaAnterior.asientos || [];
+    nuevaSala.interfaz = salaAnterior.interfaz || "";
+
     salas[editIndex] = nuevaSala;
     editIndex = null;
   } else {

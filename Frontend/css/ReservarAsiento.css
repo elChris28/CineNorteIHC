@@ -30,9 +30,9 @@
 
     /* HERO completo adaptado a Bootstrap */
     .hero {
-    min-height: 65vh;
+    min-height: 1vh;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0,0,0,0.9)),
-                url('/img/banner\ peliculas.png') no-repeat center center / cover;
+                url('/img/Banner_Dulceria.png') no-repeat center center / cover;
     color: white;
     display: flex;
     flex-direction: column;
@@ -52,11 +52,48 @@
     max-width: 600px;
     }
 
+    /* Estilo base para los asientos */
+    .asiento {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: inline-block;
+    border: 2px solid #0d6efd;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    }
 
-    
-    .botones-overlay {
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 12rem;
-    border-radius: 20px;
-    transition: opacity 0.3s ease;
+    .asiento.disponible {
+    background-color: transparent;
+    }
+
+    .asiento.ocupada {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    cursor: not-allowed;
+    }
+
+    .asiento.seleccionada {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    }
+
+    .asiento.silla {
+    background-color: transparent;
+    border-color: #6c757d;
+    position: relative;
+    }
+
+    .asiento.silla::after {
+    content: "♿";
+    font-size: 12px;
+    position: absolute;
+    top: 2px;
+    left: 4px;
+    color: #6c757d;
+    }
+
+
+    main h2, main h4, main p {
+    color: #212529; /* texto oscuro */
     }
