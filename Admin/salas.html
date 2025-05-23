@@ -90,11 +90,55 @@
           <h5 class="modal-title">Interfaz de Sala</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
         </div>
-        <div class="modal-body">
-          <div id="infoSala" class="mb-3"></div>
-          <div id="asientos" class="asientos-grid mb-3"></div>
-          <button id="guardarAsientos" class="btn btn-success">Guardar</button>
-        </div>
+          <div class="modal-body">
+            <div id="infoSala" class="mb-3 fw-bold text-secondary fs-5"></div>
+
+            <!-- Inputs para subir imágenes POV -->
+            <div class="row mb-3">
+              <div class="col-md-6 text-center">
+                <label for="povTopLeft" class="form-label">POV Superior Izquierda</label>
+                <input type="file" id="povTopLeft" class="form-control mb-2" accept="image/*">
+                <img id="previewTopLeft" class="pov-img" style="display:none;" />
+              </div>
+              <div class="col-md-6 text-center">
+                <label for="povTopRight" class="form-label">POV Superior Derecha</label>
+                <input type="file" id="povTopRight" class="form-control mb-2" accept="image/*">
+                <img id="previewTopRight" class="pov-img" style="display:none;" />
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-center align-items-center">
+              <!-- POV izquierda inferior -->
+              <div class="text-center me-3">
+                <img id="previewBottomLeft" class="pov-img" style="display:none;" />
+                <label for="povBottomLeft" class="form-label small mt-2">POV Inferior Izq</label>
+                <input type="file" id="povBottomLeft" class="form-control form-control-sm" accept="image/*">
+              </div>
+
+              <!-- Grilla central -->
+              <div id="asientosContainer" class="text-center">
+                <div id="asientos" class="d-flex flex-wrap justify-content-center"></div>
+              </div>
+
+              <!-- POV derecha inferior -->
+              <div class="text-center ms-3">
+                <img id="previewBottomRight" class="pov-img" style="display:none;" />
+                <label for="povBottomRight" class="form-label small mt-2">POV Inferior Der</label>
+                <input type="file" id="povBottomRight" class="form-control form-control-sm" accept="image/*">
+              </div>
+            </div>
+
+            <!-- Leyenda -->
+            <div class="d-flex justify-content-around small text-center mt-4 mb-2">
+              <div><span class="asiento disponible me-1"></span> Disponible</div>
+              <div><span class="asiento discapacitado me-1"></span> Discapacitado</div>
+              <div><span class="asiento ocupada me-1"></span> Ocupado</div>
+            </div>
+
+            <div class="text-end">
+              <button id="guardarAsientos" class="btn btn-success">Guardar</button>
+            </div>
+          </div>
       </div>
     </div>
   </div>

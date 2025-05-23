@@ -138,9 +138,6 @@ function abrirModalInterfaz(index) {
   const sala = salas[index];
   salaSeleccionadaIndex = index;
 
-  const info = document.getElementById("infoSala");
-  info.textContent = `${sala.nombre} - Capacidad: ${sala.capacidad}`;
-
   const filas = 10;
   const columnas = Math.ceil(sala.capacidad / filas);
   const total = filas * columnas;
@@ -150,53 +147,78 @@ function abrirModalInterfaz(index) {
     tipo: "disponible"
   }));
 
-  const grid = document.getElementById("asientos");
-  grid.innerHTML = "";
-  grid.style.gridTemplateColumns = `repeat(${columnas}, 26px)`;
+  // Inicializar estructura POV
+  sala.pov = sala.pov || {
+    topLeft: null,
+    topRight: null,
+    bottomLeft: null,
+    bottomRight: null
+  };
 
-  asientos.forEach((a, i) => {
-    const div = document.createElement("div");
-    div.className = `asiento ${a.tipo}`;
-    div.title = `Asiento ${a.id + 1}`;
+  const renderPreview = (inputId, previewId, key) => {
+    const input = document.getElementById(inputId);
+    const preview = document.getElementById(previewId);
 
-    if (a.tipo !== "ocupado") {
-      div.addEventListener("click", () => {
-        a.tipo = a.tipo === "discapacitado" ? "disponible" : "discapacitado";
-        render();
-      });
+    if (sala.pov[key]) {
+      preview.src = sala.pov[key];
+      preview.style.display = "block";
+    } else {
+      preview.style.display = "none";
     }
 
-    grid.appendChild(div);
-  });
+    input.onchange = e => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        sala.pov[key] = e.target.result;
+        preview.src = e.target.result;
+        preview.style.display = "block";
+      };
+      reader.readAsDataURL(file);
+    };
+  };
 
-  function render() {
+  renderPreview("povTopLeft", "previewTopLeft", "topLeft");
+  renderPreview("povTopRight", "previewTopRight", "topRight");
+  renderPreview("povBottomLeft", "previewBottomLeft", "bottomLeft");
+  renderPreview("povBottomRight", "previewBottomRight", "bottomRight");
+
+  const info = document.getElementById("infoSala");
+  info.textContent = `${sala.nombre} - Capacidad: ${sala.capacidad}`;
+
+  const grid = document.getElementById("asientos");
+  grid.innerHTML = "";
+  grid.style.display = "grid";
+  grid.style.gridTemplateColumns = `repeat(${columnas}, 28px)`;
+  grid.style.gap = "6px";
+
+  const render = () => {
     grid.innerHTML = "";
     asientos.forEach((a, i) => {
       const div = document.createElement("div");
       div.className = `asiento ${a.tipo}`;
-      div.title = `Asiento ${a.id + 1}`;
-      if (a.tipo !== "ocupado") {
-        div.addEventListener("click", () => {
-          a.tipo = a.tipo === "discapacitado" ? "disponible" : "discapacitado";
-          render();
-        });
-      }
+      div.title = `Asiento ${i + 1}`;
+      div.addEventListener("click", () => {
+        if (a.tipo === "disponible") a.tipo = "discapacitado";
+        else if (a.tipo === "discapacitado") a.tipo = "ocupada";
+        else a.tipo = "disponible";
+        render();
+      });
       grid.appendChild(div);
     });
-  }
+  };
 
   render();
 
   document.getElementById("guardarAsientos").onclick = () => {
     sala.asientos = asientos;
-    sala.interfaz = generarHTMLInterfaz(asientos, columnas); // 👈 NUEVA LÍNEA
-
+    sala.interfaz = generarHTMLInterfaz(asientos, columnas);
     salas[salaSeleccionadaIndex] = sala;
     guardarSalas(salas);
-    alert("Asientos guardados correctamente.");
+    alert("Interfaz de sala actualizada.");
   };
 
-  // Mostrar el modal usando Bootstrap
   const modal = new bootstrap.Modal(document.getElementById("modalInterfaz"));
   modal.show();
 }
@@ -229,15 +251,20 @@ document.getElementById("formSala").addEventListener("submit", e => {
 
   let salas = obtenerSalas();
 
-  if (editIndex !== null) {
-    const salaAnterior = salas[editIndex];
-    
-    // ✅ CONSERVAR asientos e interfaz ya guardados
-    nuevaSala.asientos = salaAnterior.asientos || [];
-    nuevaSala.interfaz = salaAnterior.interfaz || "";
+if (editIndex !== null) {
+  const salaAnterior = salas[editIndex];
 
-    salas[editIndex] = nuevaSala;
-    editIndex = null;
+  nuevaSala.asientos = salaAnterior.asientos || [];
+  nuevaSala.interfaz = salaAnterior.interfaz || "";
+  nuevaSala.pov = salaAnterior.pov || {
+    topLeft: null,
+    topRight: null,
+    bottomLeft: null,
+    bottomRight: null
+  };
+
+  salas[editIndex] = nuevaSala;
+  editIndex = null;
   } else {
     salas.push(nuevaSala);
   }

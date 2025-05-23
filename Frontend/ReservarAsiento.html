@@ -42,25 +42,49 @@
 
   <main class="container py-5">
     <div class="row g-4">
-      <!-- Panel Izquierdo -->
-      <div class="col-md-4 bg-light rounded p-4 text-dark shadow-sm">
-        <div class="text-center mb-4">
-          <img id="poster" src="" alt="Poster" class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
-        </div>
-        <h4 id="titulo" class="fw-bold"></h4>
-        <p id="idioma"></p>
-        <p class="fw-bold">CP Canto Grande</p>
-        <p><i class="bi bi-calendar-event"></i> <span id="fecha"></span></p>
-        <p><i class="bi bi-clock"></i> <span id="hora"></span></p>
-        <p><i class="bi bi-camera-reels"></i> <span id="sala"></span></p>
-        <hr>
+    <!-- Panel Izquierdo + Mi Pedido -->
+    <div class="col-md-4 bg-light rounded p-4 text-dark shadow-sm">
+      <div class="text-center mb-4">
+        <img id="poster" src="" alt="Poster" class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
       </div>
+      <h4 id="titulo" class="fw-bold"></h4>
+      <p id="idioma"></p>
+      <p><i class="bi bi-calendar-event"></i> <span id="fecha"></span></p>
+      <p><i class="bi bi-clock"></i> <span id="hora"></span></p>
+      <p><i class="bi bi-camera-reels"></i> <span id="sala"></span></p>
+
+      <hr>
+
+      <!-- 🧾 Mi Pedido -->
+      <div id="cardPedido" class="card bg-white p-3 shadow-sm mt-3" style="display: none;">
+        <h6 class="fw-bold text-danger mb-3">Mi Pedido</h6>
+        <ul id="resumenPedido" class="list-group small mb-2"></ul>
+        <p class="fw-bold text-end">Total: <span id="totalPedido">S/. 0.00</span></p>
+        <button class="btn btn-success w-100" onclick="irAPago()">Ir a Pago</button>
+      </div>
+    </div>
 
       <!-- Panel Derecho -->
-      <div class="col-md-8 bg-white rounded p-4 shadow-sm">
-        <h5 class="text-center fw-bold mb-4 text-muted">Pantalla</h5>
-        <div id="interfazAsientos" class="d-flex justify-content-center mb-4"></div>
+    <div class="col-md-8 bg-white rounded p-4 shadow-sm">
+      <h5 class="text-center fw-bold mb-4 text-muted">Pantalla</h5>
 
+      <!-- Grilla vertical con POVs arriba, asientos al centro, POVs abajo -->
+      <div class="d-flex flex-column align-items-center gap-2">
+
+        <!-- POVs Superiores (más cerca ahora) -->
+        <div class="d-flex justify-content-center" style="gap: 320px;">
+          <img id="povTopLeft" class="pov-img clickable" style="display:none;" />
+          <img id="povTopRight" class="pov-img clickable" style="display:none;" />
+        </div>
+
+        <!-- Asientos + laterales -->
+        <div class="d-flex justify-content-center align-items-center mb-3">
+          <img id="povBottomLeft" class="pov-img clickable me-2" style="display:none;" />
+          <div id="interfazAsientos" class="d-flex justify-content-center"></div>
+          <img id="povBottomRight" class="pov-img clickable ms-2" style="display:none;" />
+        </div>
+
+        <!-- Leyenda -->
         <div class="d-flex justify-content-around text-center mb-3 small">
           <div><span class="asiento disponible me-1"></span> Disponible</div>
           <div><span class="asiento ocupada me-1"></span> Ocupada</div>
@@ -74,6 +98,20 @@
 
         <div class="text-center mt-4">
           <button class="btn btn-primary btn-lg px-5" id="confirmarReserva" disabled>Continuar</button>
+        </div>
+      </div>
+
+      <!-- Modal para ampliar POV -->
+      <div class="modal fade" id="modalPOV" tabindex="-1" aria-labelledby="modalPOVLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content bg-dark text-white">
+            <div class="modal-body p-0">
+              <img id="modalPOVImage" class="w-100" style="max-height: 80vh; object-fit: contain;" />
+            </div>
+            <div class="modal-footer bg-dark border-0 justify-content-center">
+              <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

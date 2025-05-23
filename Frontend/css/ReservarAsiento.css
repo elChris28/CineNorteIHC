@@ -31,8 +31,7 @@
     /* HERO completo adaptado a Bootstrap */
     .hero {
     min-height: 1vh;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0,0,0,0.9)),
-                url('/img/Banner_Dulceria.png') no-repeat center center / cover;
+    background: black;
     color: white;
     display: flex;
     flex-direction: column;
@@ -59,8 +58,11 @@
     border-radius: 50%;
     display: inline-block;
     border: 2px solid #0d6efd;
-    cursor: pointer;
+    cursor: pointer;   
     transition: background-color 0.2s;
+
+    justify-content: center;
+
     }
 
     .asiento.disponible {
@@ -93,7 +95,29 @@
     color: #6c757d;
     }
 
+    .numero-asiento {
+    pointer-events: none;
+    }
+
 
     main h2, main h4, main p {
-    color: #212529; /* texto oscuro */
+    color: #28313a; /* texto oscuro */
+    }
+
+    .pov-img {
+    width: 70px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 2px solid #555;
+    transition: transform 0.2s;
+    }
+
+    .pov-img:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+    }
+
+    .clickable {
+    cursor: pointer;
     }
