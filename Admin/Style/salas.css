@@ -148,7 +148,10 @@ body {
 .asiento.disponible {
   background-color: transparent;
   border-color: #198754;
+  
 }
+
+
 
 .asiento.discapacitado {
   background-color: #0dcaf0;

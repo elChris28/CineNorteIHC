@@ -1,6 +1,6 @@
     /* Estilo base: navbar encima del hero */
     .custom-navbar {
-    background-color: transparent;
+    background-color: black;
     transition: background-color 0.3s, padding 0.3s, text-align 0.3s;
     padding: 1.2em 2em;
     text-align: left;
@@ -51,6 +51,14 @@
     max-width: 600px;
     }
 
+    /* Footer */
+    footer {
+    text-align: center;
+    padding: 2rem;
+    background: #111;
+    color: #888;
+    }
+
     /* Estilo base para los asientos */
     .asiento {
     width: 26px;
@@ -60,8 +68,7 @@
     border: 2px solid #0d6efd;
     cursor: pointer;   
     transition: background-color 0.2s;
-
-    justify-content: center;
+    color: rgb(255, 255, 255);
 
     }
 

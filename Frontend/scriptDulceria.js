@@ -27,16 +27,11 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="card producto-card h-100 text-center">
             <img src="${p.imagen}" class="card-img-top" alt="${p.nombre}" style="height: 220px; object-fit: cover;">
             <div class="card-body d-flex flex-column justify-content-between">
-            <div>
-                <h5 class="card-title">${p.nombre}</h5>
-                <p class="card-text">${p.descripcion}</p>
-                <p class="card-text fw-bold">S/. ${p.precio.toFixed(2)}</p>
-            </div>
-            <div class="cantidad d-flex justify-content-center align-items-center gap-2 mt-3">
-                <button class="btn btn-sm btn-dark fw-bold" onclick="cambiarCantidad('${idCantidad}', -1)">-</button>
-                <span id="${idCantidad}" class="px-2">0</span>
-                <button class="btn btn-sm btn-dark fw-bold" onclick="cambiarCantidad('${idCantidad}', 1)">+</button>
-            </div>
+              <div>
+                  <h5 class="card-title">${p.nombre}</h5>
+                  <p class="card-text">${p.descripcion}</p>
+                  <p class="card-text fw-bold">S/. ${p.precio.toFixed(2)}</p>
+              </div>
             </div>
         </div>
     `;
@@ -62,13 +57,7 @@ function mostrarCategoria(categoria) {
   });
 }
 
-// Aumentar / disminuir cantidad
-function cambiarCantidad(id, delta) {
-  const cantidadEl = document.getElementById(id);
-  let cantidad = parseInt(cantidadEl.textContent);
-  cantidad = Math.max(0, cantidad + delta);
-  cantidadEl.textContent = cantidad;
-}
+
 
 // Scroll dinámico para navbar (opcional si tienes navbar flotante)
 window.addEventListener("scroll", () => {

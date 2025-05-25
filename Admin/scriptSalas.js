@@ -111,7 +111,7 @@ function renderHorariosTemp() {
     span.className = "badge bg-dark d-flex align-items-center";
     span.style.padding = "0.5rem 0.75rem";
     span.style.marginRight = "0.5rem";
-    span.innerHTML = `${hora} <button class="btn-close btn-close-white ms-2" onclick="eliminarHorario(${index})"></button>`;
+    span.innerHTML = `${hora} <button class="btn-close btn-close-white ms-2" onclick="eliminarHorario(${index})">X</button>`;
     contenedor.appendChild(span);
   });
 }
