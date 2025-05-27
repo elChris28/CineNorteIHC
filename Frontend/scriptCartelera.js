@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
         <div class="botones-overlay position-absolute top-50 start-50 translate-middle text-center" style="display: none;">
           <a href="horarios.html?id=${index}" class="btn btn-danger btn-sm me-2">Comprar</a>
-          <a href="#" class="btn btn-light btn-sm text-dark">Más detalles</a>
+          <a href="#" class="btn btn-light btn-sm text-dark btn-detalles" data-index="${index}">Más detalles</a>
         </div>
       </div>
     `;
@@ -44,6 +44,15 @@ document.addEventListener("DOMContentLoaded", () => {
       botones.style.display = 'none';
     });
   });
-
+  
+  document.querySelectorAll('.btn-detalles').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const index = btn.getAttribute('data-index');
+      const peliculaSeleccionada = peliculas[index];
+      localStorage.setItem("peliculaSeleccionada", JSON.stringify(peliculaSeleccionada));
+      window.location.href = "detalles.html";
+    });
+  });
 
 });

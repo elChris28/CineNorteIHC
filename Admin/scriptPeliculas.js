@@ -35,6 +35,7 @@ function renderPeliculas() {
       <p><strong>Disponibilidad:</strong> ${(pelicula.disponibilidad || []).join(", ") || 'Sin especificar'}</p>
       <p><strong>Sinopsis:</strong><br>${pelicula.sinopsis || 'Sin sinopsis'}</p>
       <div class="mt-2">
+        ${pelicula.trailer ? `<a href="${pelicula.trailer}" target="_blank" class="btn btn-sm btn-secondary me-2">Ver Tráiler</a>` : ""}
         <button class="btn btn-sm btn-primary me-2" onclick="editarPelicula(${index})">Editar</button>
         <button class="btn btn-sm btn-danger" onclick="eliminarPelicula(${index})">Eliminar</button>
       </div>
@@ -66,7 +67,7 @@ function editarPelicula(index) {
   document.getElementById("3d").checked = p.disponibilidad?.includes("3D");
   document.getElementById("vip").checked = p.disponibilidad?.includes("VIP");
   document.getElementById("imax").checked = p.disponibilidad?.includes("IMAX");
-
+  document.getElementById("trailer").value = p.trailer || "";
   const preview = document.getElementById("previewPoster");
   preview.src = p.poster;
   preview.style.display = "block";
@@ -97,6 +98,7 @@ document.getElementById("formPelicula").addEventListener("submit", e => {
       clasificacion: document.getElementById("clasificacion").value,
       idioma: document.getElementById("idioma").value,
       sinopsis: document.getElementById("sinopsis").value,
+      trailer: document.getElementById("trailer").value,
       disponibilidad,
       poster: posterData
     };
