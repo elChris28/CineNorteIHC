@@ -24,10 +24,19 @@
           <li class="nav-item"><a class="nav-link" href="horarios.html">Horarios</a></li>
           <li class="nav-item"><a class="nav-link" href="Dulceria.html">Dulceria</a></li>
         </ul>
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="#">Iniciar Sesión</a></li>
-          <li class="nav-item"><a class="nav-link" href="/index.html">Cerrar Sesión</a></li>
+        <ul class="navbar-nav ms-auto" id="navLoginRegistro">
+          <li class="nav-item"><a class="nav-link" href="/index.html">Iniciar Sesión</a></li>
+          <li class="nav-item"><a class="nav-link" href="registro.html">Registrarse</a></li>
         </ul>
+
+        <ul class="navbar-nav ms-auto" id="navUsuarioActivo" style="display: none;">
+          <li class="nav-item">
+            <span class="nav-link" id="nombreUsuario"></span>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link" id="cerrarSesion">Cerrar sesión</a>
+          </li>
+        </ul> 
       </div>
     </div>
   </nav>

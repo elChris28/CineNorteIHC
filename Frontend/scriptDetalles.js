@@ -1,4 +1,26 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const usuarioActivo = JSON.parse(localStorage.getItem('usuarioActivo'));
+
+  const navLoginRegistro = document.getElementById('navLoginRegistro');
+  const navUsuarioActivo = document.getElementById('navUsuarioActivo');
+  const nombreUsuario = document.getElementById('nombreUsuario');
+  const cerrarSesionBtn = document.getElementById('cerrarSesion');
+
+  if (usuarioActivo) {
+    navLoginRegistro.style.display = 'none';
+    navUsuarioActivo.style.display = 'flex';
+    nombreUsuario.textContent = `${usuarioActivo.nombre || usuarioActivo.correo}`;
+  } else {
+    navLoginRegistro.style.display = 'flex';
+    navUsuarioActivo.style.display = 'none';
+  }
+
+  cerrarSesionBtn?.addEventListener('click', (e) => {
+    e.preventDefault();
+    localStorage.removeItem('usuarioActivo');
+    window.location.href = '/index.html';
+  });
+
   const pelicula = JSON.parse(localStorage.getItem("peliculaSeleccionada"));
   const peliculas = JSON.parse(localStorage.getItem("peliculas")) || [];
   const salas = JSON.parse(localStorage.getItem("salas")) || [];
@@ -70,6 +92,12 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function seleccionarHorario(nombreSala, peliculaId, horario) {
+  const usuarioActivo = JSON.parse(localStorage.getItem("usuarioActivo"));
+  if (!usuarioActivo) {
+    alert("Debes iniciar sesión para reservar un asiento.");
+    return;
+  }
+
   const reserva = {
     sala: { nombre: nombreSala },
     peliculaId: peliculaId,

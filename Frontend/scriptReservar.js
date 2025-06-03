@@ -11,6 +11,29 @@ let columnas = 0; // Será asignado al inicializar la interfaz
 let filas = 10;   // Puedes ajustarlo si tus salas usan otro número de filas
 
 document.addEventListener("DOMContentLoaded", () => {
+
+  const usuarioActivo = JSON.parse(localStorage.getItem('usuarioActivo'));
+
+  const navLoginRegistro = document.getElementById('navLoginRegistro');
+  const navUsuarioActivo = document.getElementById('navUsuarioActivo');
+  const nombreUsuario = document.getElementById('nombreUsuario');
+  const cerrarSesionBtn = document.getElementById('cerrarSesion');
+
+  if (usuarioActivo) {
+    navLoginRegistro.style.display = 'none';
+    navUsuarioActivo.style.display = 'flex';
+    nombreUsuario.textContent = `${usuarioActivo.nombre || usuarioActivo.correo}`;
+  } else {
+    navLoginRegistro.style.display = 'flex';
+    navUsuarioActivo.style.display = 'none';
+  }
+
+  cerrarSesionBtn?.addEventListener('click', (e) => {
+    e.preventDefault();
+    localStorage.removeItem('usuarioActivo');
+    window.location.href = '/index.html';
+  });
+
   const reserva = JSON.parse(localStorage.getItem("reservaSeleccionada"));
   const salas = JSON.parse(localStorage.getItem("salas")) || [];
   const peliculas = JSON.parse(localStorage.getItem("peliculas")) || [];
