@@ -8,6 +8,29 @@ window.addEventListener("scroll", () => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
+  const usuarioActivo = JSON.parse(localStorage.getItem('usuarioActivo'));
+
+  const navLoginRegistro = document.getElementById('navLoginRegistro');
+  const navUsuarioActivo = document.getElementById('navUsuarioActivo');
+  const nombreUsuario = document.getElementById('nombreUsuario');
+  const cerrarSesionBtn = document.getElementById('cerrarSesion');
+
+  if (usuarioActivo) {
+    navLoginRegistro.style.display = 'none';
+    navUsuarioActivo.style.display = 'flex';
+    nombreUsuario.textContent = `${usuarioActivo.nombre || usuarioActivo.correo}`;
+  } else {
+    navLoginRegistro.style.display = 'flex';
+    navUsuarioActivo.style.display = 'none';
+  }
+
+  cerrarSesionBtn?.addEventListener('click', (e) => {
+    e.preventDefault();
+    localStorage.removeItem('usuarioActivo');
+    window.location.href = '/index.html';
+  });
+
+
   const listaPeliculas = document.getElementById("listaPeliculas");
   const peliculas = JSON.parse(localStorage.getItem("peliculas")) || [];
 
@@ -24,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <p class="card-text"><small>Clasificación: ${p.clasificacion}</small></p>
         </div>
         <div class="botones-overlay position-absolute top-50 start-50 translate-middle text-center" style="display: none;">
-          <a href="horarios.html?id=${index}" class="btn btn-danger btn-sm me-2">Comprar</a>
+          <a href="#" class="btn btn-danger btn-sm me-2 btn-comprar" data-index="${index}">Comprar</a>
           <a href="#" class="btn btn-light btn-sm text-dark btn-detalles" data-index="${index}">Más detalles</a>
         </div>
       </div>
@@ -55,4 +78,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  document.querySelectorAll('.btn-comprar').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const index = btn.getAttribute('data-index');
+
+    if (!usuarioActivo) {
+      alert('Debes iniciar sesión para comprar entradas.');
+    } else {
+      window.location.href = `horarios.html?id=${index}`;
+    }
+  });
+});
 });

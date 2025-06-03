@@ -1,4 +1,26 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const usuarioActivo = JSON.parse(localStorage.getItem('usuarioActivo'));
+
+  const navLoginRegistro = document.getElementById('navLoginRegistro');
+  const navUsuarioActivo = document.getElementById('navUsuarioActivo');
+  const nombreUsuario = document.getElementById('nombreUsuario');
+  const cerrarSesionBtn = document.getElementById('cerrarSesion');
+
+  if (usuarioActivo) {
+    navLoginRegistro.style.display = 'none';
+    navUsuarioActivo.style.display = 'flex';
+    nombreUsuario.textContent = `${usuarioActivo.nombre || usuarioActivo.correo}`;
+  } else {
+    navLoginRegistro.style.display = 'flex';
+    navUsuarioActivo.style.display = 'none';
+  }
+
+  cerrarSesionBtn?.addEventListener('click', (e) => {
+    e.preventDefault();
+    localStorage.removeItem('usuarioActivo');
+    window.location.href = '/index.html';
+  });
+
   const resumen = JSON.parse(localStorage.getItem("pedidoDulceria")) || {};
   const asientos = JSON.parse(localStorage.getItem("asientosSeleccionados")) || [];
   const lista = document.getElementById("resumenPedido");
