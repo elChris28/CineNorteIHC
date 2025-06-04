@@ -54,30 +54,36 @@
     background-color: rgba(0, 0, 0, 0.5);
     }
 
- /* Fondo animado para todo el body */
-body {
-  margin: 0;
-  padding: 0;
-  background: url('/img/banner\ peliculas.png') no-repeat center center fixed;
-  background-size: cover;
-  background-attachment: fixed;
-  font-family: 'Segoe UI', sans-serif;
-  color: white;
-  position: relative;
-}
+    /* Fondo animado para todo el body */
+    body {
+    margin: 0;
+    padding: 0;
+    background: url('/img/banner\ peliculas.png') no-repeat center center fixed;
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    position: relative;
+    }
 
-/* Capa oscura sobre el fondo */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.7), rgba(40, 0, 70, 0.5));
-  backdrop-filter: blur(2px);
-  z-index: -1;
-}
+    /* Capa oscura sobre el fondo */
+    body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.7), rgba(40, 0, 70, 0.5));
+    backdrop-filter: blur(2px);
+    z-index: -1;
+    }
 
-/* El contenido principal debe ser opaco y legible */
-main {
-  z-index: 1;
-  position: relative;
-}
+    /* El contenido principal debe ser opaco y legible */
+    main {
+    z-index: 1;
+    position: relative;
+    }
+    
+    /* En tu hoja styles.css (opcional) */
+    footer a:hover i {
+    transform: scale(1.2);
+    transition: transform 0.2s;
+    }

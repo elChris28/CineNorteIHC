@@ -7,7 +7,6 @@
     }
     });
 
-
     document.addEventListener("DOMContentLoaded", function () {
     const dataJSON = localStorage.getItem("nosotrosData");
     if (!dataJSON) return;
@@ -19,17 +18,14 @@
 
     const mapaIframe = document.getElementById("mapaIframe");
     if (data.mapa && mapaIframe) {
-        // Asegura que el enlace sea un embed válido
         let embedUrl = data.mapa;
 
-        // Si es un enlace compartido normal, lo convertimos a embed
         if (!embedUrl.includes("/embed")) {
-        const match = embedUrl.match(/!3d([\d.-]+)!4d([\d.-]+)/); // Coordenadas del link largo
+        const match = embedUrl.match(/!3d([\d.-]+)!4d([\d.-]+)/);
         if (match) {
             const [_, lat, lng] = match;
             embedUrl = `https://www.google.com/maps/embed/v1/view?key=TU_API_KEY&center=${lat},${lng}&zoom=16`;
         } else {
-            // Usa embed genérico si no puede convertir
             embedUrl = embedUrl.replace("/maps/", "/maps/embed?");
         }
         }
@@ -37,7 +33,23 @@
         mapaIframe.src = embedUrl;
     }
 
-    document.getElementById("facebookLink").href = data.facebook || "#";
-    document.getElementById("instagramLink").href = data.instagram || "#";
-    document.getElementById("tiktokLink").href = data.tiktok || "#";
+    // Botones centrales
+    const facebookLink = document.getElementById("facebookLink");
+    if (facebookLink && data.facebook) facebookLink.href = data.facebook;
+
+    const instagramLink = document.getElementById("instagramLink");
+    if (instagramLink && data.instagram) instagramLink.href = data.instagram;
+
+    const tiktokLink = document.getElementById("tiktokLink");
+    if (tiktokLink && data.tiktok) tiktokLink.href = data.tiktok;
+
+    // Íconos del footer
+    const linkFacebook = document.getElementById("linkFacebook");
+    if (linkFacebook && data.facebook) linkFacebook.href = data.facebook;
+
+    const linkInstagram = document.getElementById("linkInstagram");
+    if (linkInstagram && data.instagram) linkInstagram.href = data.instagram;
+
+    const linkTikTok = document.getElementById("linkTikTok");
+    if (linkTikTok && data.tiktok) linkTikTok.href = data.tiktok;
     });
